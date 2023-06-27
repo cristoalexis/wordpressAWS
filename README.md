@@ -10,7 +10,8 @@ Creación del repositorio en GitHub: Se creó un repositorio en GitHub para el p
 
 Configuración del repositorio: Se configuró correctamente el repositorio, incluyendo el archivo README, la estructura de carpetas y los archivos de configuración iniciales.
 
-# Creación del archivo Dockerfile: Se creó un archivo Dockerfile que define la imagen de Docker para la aplicación. El Dockerfile contiene los siguientes pasos:
+# Creación del archivo Dockerfile: 
+Se creó un archivo Dockerfile que define la imagen de Docker para la aplicación. El Dockerfile contiene los siguientes pasos:
 
 Se utiliza la imagen base php:7.4-apache.
 Se actualizan los paquetes del sistema y se instalan las dependencias necesarias para la aplicación web.
