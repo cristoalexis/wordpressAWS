@@ -1,9 +1,9 @@
 # wordpressAWS
  Este repositorio contiene los archivos y configuraciones necesarios para implementar una aplicación web utilizando WordPress en contenedores Docker. El proyecto se enfoca en demostrar el uso de contenedores y GitHub en el proceso de despliegue de una aplicación web.
-Configuración de WordPress en Docker
+#Configuración de WordPress en Docker
 Este repositorio contiene los archivos necesarios para configurar un entorno de WordPress utilizando Docker.
 
-Requisitos previos
+# Requisitos previos
 Docker instalado en tu máquina local. Puedes obtener Docker desde el sitio web oficial de Docker y seguir las instrucciones de instalación para tu sistema operativo.
 Pasos de configuración
 Clona este repositorio en tu máquina local:
