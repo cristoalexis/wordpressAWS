@@ -1,13 +1,23 @@
-# Utiliza la imagen base de WordPress
-FROM wordpress:latest
+# Imagen base de PHP con Apache
+FROM php:7.4-apache
 
-# Variables de entorno para la configuración de la base de datos
-ENV WORDPRESS_DB_HOST wordpressdb-instance-1.cp9fc77m67kj.us-east-1.rds.amazonaws.com
-ENV WORDPRESS_DB_NAME wordpressdb
-ENV WORDPRESS_DB_USER admin
-ENV WORDPRESS_DB_PASSWORD Cristobal123
+# Variables de entorno de WordPress
+ENV WORDPRESS_VERSION 5.8
+ENV WORDPRESS_SHA1 0253e268dd8b77ce022bea75b1de16d80a244eba
 
-# Copia el archivo de configuración personalizado a la ubicación correcta
-COPY wp-config.php /var/www/html/wp-config.php
+# Descargar e instalar WordPress
+RUN set -ex; \
+    curl -o wordpress.tar.gz -SL https://wordpress.org/wordpress-${WORDPRESS_VERSION}.tar.gz; \
+    echo "$WORDPRESS_SHA1 *wordpress.tar.gz" | sha1sum -c -; \
+    tar -xzf wordpress.tar.gz -C /var/www/html/; \
+    rm wordpress.tar.gz; \
+    chown -R www-data:www-data /var/www/html/
 
+# Configuración de Apache
+RUN a2enmod rewrite
 
+# Puerto expuesto por Apache
+EXPOSE 80
+
+# Punto de entrada del contenedor
+CMD ["apache2-foreground"]
