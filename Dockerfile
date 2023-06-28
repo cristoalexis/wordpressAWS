@@ -1,22 +1,38 @@
 
+# Etapa 1: Construir imagen base con WordPress
+FROM wordpress:latest
 
-# Utilizamos la imagen base de PHP con Apache
-FROM php:7.4-apache
+# Variables de entorno para la configuración de WordPress
+ENV WORDPRESS_DB_NAME=my_database \
+    WORDPRESS_DB_USER=my_user \
+    WORDPRESS_DB_PASSWORD=my_password \
+    WORDPRESS_DB_HOST=my_database_host \
+    WORDPRESS_DEBUG=false \
+    WORDPRESS_TABLE_PREFIX=wp_ \
+    WORDPRESS_DISABLE_FILE_EDIT=false \
+    WORDPRESS_AUTOMATIC_UPDATER_DISABLED=true \
+    WORDPRESS_POST_REVISIONS=false \
+    WORDPRESS_CACHE=true \
+    WORDPRESS_DISALLOW_FILE_MODS=true \
+    WORDPRESS_FORCE_SSL_ADMIN=false \
+    WORDPRESS_COOKIE_SECURE=true \
+    WORDPRESS_DISALLOW_UNFILTERED_HTML=true \
+    WORDPRESS_DISABLE_WP_CRON=true \
+    WORDPRESS_TIMEZONE=America/New_York
 
-# Actualizamos los paquetes del sistema
-RUN apt-get update
+# Configurar las variables de entorno para la instalación de WordPress
+ENV WORDPRESS_CONFIG_EXTRA="\
+    define('WP_SITEURL', 'http://example.com'); \
+    define('WP_HOME', 'http://example.com'); \
+    define('WP_POST_REVISIONS', false); \
+    define('WP_CACHE', true); \
+    define('DISALLOW_FILE_MODS', true); \
+    define('FORCE_SSL_ADMIN', false); \
+    define('COOKIE_SECURE', true); \
+    define('DISALLOW_UNFILTERED_HTML', true); \
+    define('DISABLE_WP_CRON', true); \
+    define('WP_TIMEZONE', 'America/New_York');"
 
-# Instalamos extensiones de PHP necesarias para WordPress
-RUN docker-php-ext-install mysqli gd
+# Copiar el archivo wp-config.php personalizado al contenedor
+COPY wp-config.php /var/www/html/wp-config.php
 
-# Copiamos los archivos de WordPress al directorio de trabajo
-COPY wordpress /var/www/html
-
-# Establecemos los permisos adecuados para los archivos de WordPress
-RUN chown -R www-data:www-data /var/www/html
-
-# Exponemos el puerto 80 para acceder a la aplicación
-EXPOSE 80
-
-# Iniciamos el servidor Apache en primer plano
-CMD ["apache2-foreground"]
