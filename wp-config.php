@@ -1,13 +1,19 @@
-/** Configuración de la base de datos de WordPress */
-define('DB_NAME', getenv('WORDPRESS_DB_NAME'));
-define('DB_USER', getenv('WORDPRESS_DB_USER'));
-define('DB_PASSWORD', getenv('WORDPRESS_DB_PASSWORD'));
-define('DB_HOST', getenv('WORDPRESS_DB_HOST'));
+<?php
+define('DB_NAME', 'wordpressdb');
+define('DB_USER', 'admin');
+define('DB_PASSWORD', 'Cristobal123');
+define('DB_HOST', 'wordpressdb-instance-1.cp9fc77m67kj.us-east-1.rds.amazonaws.com');
 define('DB_CHARSET', 'utf8mb4');
 define('DB_COLLATE', '');
 
-// Resto del archivo...
+// Resto de la configuración de WordPress...
 
-/** Dirección URL de WordPress */
-define('WP_SITEURL', 'http://' . $_SERVER['HTTP_HOST']);
-define('WP_HOME', 'http://' . $_SERVER['HTTP_HOST']);
+// Define las claves únicas de autenticación y sal
+define('AUTH_KEY',         'tu-contraseña-única');
+define('SECURE_AUTH_KEY',  'tu-contraseña-única');
+define('LOGGED_IN_KEY',    'tu-contraseña-única');
+define('NONCE_KEY',        'tu-contraseña-única');
+define('AUTH_SALT',        'tu-contraseña-única');
+define('SECURE_AUTH_SALT', 'tu-contraseña-única');
+define('LOGGED_IN_SALT',   'tu-contraseña-única');
+define('NONCE_SALT',       'tu-contraseña-única');
