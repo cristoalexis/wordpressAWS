@@ -1,31 +1,22 @@
 
-# Utiliza una imagen base de PHP con Apache
+
+# Utilizamos la imagen base de PHP con Apache
 FROM php:7.4-apache
 
-# Actualiza el sistema y establece variables de entorno
-RUN apt-get update && apt-get install -y \
-    libfreetype6-dev \
-    libjpeg62-turbo-dev \
-    libpng-dev \
-    libzip-dev \
-    unzip
+# Actualizamos los paquetes del sistema
+RUN apt-get update
 
-# Habilita el módulo de Apache para reescritura de URL
-RUN a2enmod rewrite
+# Instalamos extensiones de PHP necesarias para WordPress
+RUN docker-php-ext-install mysqli gd
 
-# Establece el directorio de trabajo en el contenedor
-WORKDIR /var/www/html
+# Copiamos los archivos de WordPress al directorio de trabajo
+COPY wordpress /var/www/html
 
-# Copia los archivos de WordPress al contenedor
-COPY wordpress .
+# Establecemos los permisos adecuados para los archivos de WordPress
+RUN chown -R www-data:www-data /var/www/html
 
-# Copia el archivo de configuración de Apache
-COPY wordpress.conf /etc/apache2/sites-available/000-default.conf
-
-# Exponer el puerto 80 para acceder a la aplicación
+# Exponemos el puerto 80 para acceder a la aplicación
 EXPOSE 80
 
-# Inicia el servidor Apache en primer plano
+# Iniciamos el servidor Apache en primer plano
 CMD ["apache2-foreground"]
-
-
