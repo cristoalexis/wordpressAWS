@@ -1,28 +1,45 @@
 # WordpressAWS
-# Proyecto de Implementación de Aplicación Web con Docker y GitHub
-Este proyecto tiene como objetivo desplegar una aplicación web utilizando contenedores Docker y GitHub para el control de versiones y colaboración en el desarrollo del código. A continuación se detallan los pasos realizados hasta el momento.
+# FASE 1
+# Despliegue de WordPress en una instancia EC2 de Amazon Linux
 
-# Descripción del Proyecto
-El proyecto consiste en implementar una aplicación web sencilla utilizando contenedores Docker y GitHub. La aplicación seleccionada es WordPress.
+Este repositorio contiene los archivos necesarios para desplegar WordPress en una instancia EC2 de Amazon Linux utilizando Docker.
 
-# Pasos Realizados
-Creación del repositorio en GitHub: Se creó un repositorio en GitHub para el proyecto.
+# Requisitos previos
+- Una cuenta de AWS con acceso a EC2.
+- Una instancia EC2 de Amazon Linux en funcionamiento.
 
-Configuración del repositorio: Se configuró correctamente el repositorio, incluyendo el archivo README, la estructura de carpetas y los archivos de configuración iniciales.
+# Configuración de la instancia EC2
+1. Inicia sesión en la consola de AWS y navega hasta la sección de EC2.
+2. Crea una nueva instancia EC2 de Amazon Linux.
+3. Asigna una clave SSH a la instancia para poder acceder a ella posteriormente.
+4. Asegúrate de tener los puertos 80 y 443 abiertos en el grupo de seguridad de la instancia EC2.
 
-# Creación del archivo Dockerfile: 
-Se creó un archivo Dockerfile que define la imagen de Docker para la aplicación. El Dockerfile contiene los siguientes pasos:
+# Conexión a la instancia EC2
+1. Abre una terminal en tu máquina local.
+2. Conéctate a la instancia EC2 utilizando SSH:
+# ## Clonar el repositorio
+1. En la instancia EC2, asegúrate de tener Git instalado. Si no lo tienes, ejecuta el siguiente comando:
+sudo yum install -y git
 
-Se utiliza la imagen base php:7.4-apache.
-Se actualizan los paquetes del sistema y se instalan las dependencias necesarias para la aplicación web.
-Se habilita el módulo rewrite de Apache.
-Se establece el directorio de trabajo en /var/www/html.
-Se copian los archivos de la aplicación web en el directorio de trabajo.
-# Construcción de la imagen Docker: 
-Se construyó la imagen Docker utilizando el comando docker build. La imagen se etiquetó como wordpresscris.
+2. Clona este repositorio en la instancia EC2:
+ # EN TERMINAL
+ git clone https://github.com/cristoalexis/wordpressAWS.git
+cd wordpressAWS
+docker build -t wordpress-image .
+docker run -d -p 80:80 --name my-wordpress-container wordpress-image
+Este comando ejecuta el contenedor utilizando la imagen que acabamos de crear y mapea el puerto 80 de la instancia EC2 al puerto 80 del contenedor.
+Verifica que el contenedor se haya iniciado correctamente ejecutando el siguiente comando:
+Copy code
+docker ps
+Deberías ver el contenedor de WordPress en la lista.
+Ahora puedes acceder a WordPress en tu navegador web utilizando la dirección IP de tu instancia EC2. Asegúrate de tener el puerto 80 abierto en el grupo de seguridad de la instancia EC2.
+arduino
+Copy code
+http://<DIRECCION_IP_DE_LA_INSTANCIA>
+Reemplaza <DIRECCION_IP_DE_LA_INSTANCIA> con la dirección IP de tu instancia EC2.
+Siguiendo estos pasos, deberías poder desplegar WordPress en tu instancia EC2 de Amazon Linux utilizando solo un archivo Dockerfile. Asegúrate de haber configurado correctamente el archivo Dockerfile para incluir todas las dependencias y configuraciones necesarias para ejecutar WordPress en el contenedor.
 
-# Ejecución del contenedor:
-Se ejecutó un contenedor a partir de la imagen wordpresscris utilizando el comando docker run.
-
-# Verificación del funcionamiento: 
-Se verificó el funcionamiento de la aplicación web accediendo a la dirección IP del contenedor.
+sudo service docker start
+sudo usermod -a -G docker ec2-user
+2. Cierra la sesión de SSH y vuelve a iniciar sesión para aplicar los cambios.
+3. Instala Docker Compose en la instancia EC2. Ejecuta los siguientes comandos:
