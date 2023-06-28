@@ -1,15 +1,19 @@
-FROM php:7.4-apache
-RUN apt-get update && apt-get install -y \
-    libfreetype6-dev \
-    libjpeg62-turbo-dev \
-    libpng-dev \
-    libzip-dev \
-    unzip
+# Utilizamos una imagen base de WordPress
+FROM wordpress:latest
 
-RUN a2enmod rewrite
+# Copiamos nuestro archivo de configuración personalizado de Apache
+COPY wordpress.conf /etc/apache2/sites-available/000-default.conf
 
-WORKDIR /var/www/html
-COPY wordpress .
+# Copiamos el archivo .htaccess para la reescritura de URLs
+COPY .htaccess /var/www/html/.htaccess
 
+# Establecemos los permisos adecuados en el directorio de WordPress
+RUN chown -R www-data:www-data /var/www/html
+
+# Exponemos el puerto 80 para acceder a la aplicación
 EXPOSE 80
+
+# Comando de inicio para Apache
+CMD ["apache2-foreground"]
+
 
