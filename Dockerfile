@@ -1,23 +1,22 @@
-# Imagen base de PHP con Apache
-FROM php:7.4-apache
 
-# Variables de entorno de WordPress
-ENV WORDPRESS_VERSION 5.8
-ENV WORDPRESS_SHA1 0253e268dd8b77ce022bea75b1de16d80a244eba
+FROM wordpress:latest
 
-# Descargar e instalar WordPress
+# Copia el archivo de configuración de Apache con la opción de mod_rewrite habilitada
+COPY ./apache-config.conf /etc/apache2/conf-available/
+RUN a2enconf apache-config
+
+# Establece el directorio de trabajo
+WORKDIR /var/www/html
+
+# Descarga e instala WordPress
 RUN set -ex; \
-    curl -o wordpress.tar.gz -SL https://wordpress.org/wordpress-${WORDPRESS_VERSION}.tar.gz; \
-    echo "$WORDPRESS_SHA1 *wordpress.tar.gz" | sha1sum -c -; \
-    tar -xzf wordpress.tar.gz -C /var/www/html/; \
+    curl -o wordpress.tar.gz -SL https://wordpress.org/latest.tar.gz; \
+    tar -xzf wordpress.tar.gz --strip-components=1; \
     rm wordpress.tar.gz; \
-    chown -R www-data:www-data /var/www/html/
+    chown -R www-data:www-data .
 
-# Configuración de Apache
-RUN a2enmod rewrite
-
-# Puerto expuesto por Apache
+# Expone el puerto 80
 EXPOSE 80
 
-# Punto de entrada del contenedor
+# Inicia el servidor Apache
 CMD ["apache2-foreground"]
