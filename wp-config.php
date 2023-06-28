@@ -1,8 +1,8 @@
 <?php
-define('DB_NAME', 'wordpressdb');
+define('DB_NAME', 'wordpressdbev3');
 define('DB_USER', 'admin');
 define('DB_PASSWORD', 'Cristobal123');
-define('DB_HOST', 'wordpressdb-instance-1.cp9fc77m67kj.us-east-1.rds.amazonaws.com');
+define('DB_HOST', 'wordpressdbev3-instance-1.cp9fc77m67kj.us-east-1.rds.amazonaws.com');
 define('DB_CHARSET', 'utf8mb4');
 define('DB_COLLATE', '');
 
