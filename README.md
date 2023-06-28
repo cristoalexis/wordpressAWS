@@ -23,24 +23,24 @@ sudo yum install -y git
 
 2. Clona este repositorio en la instancia EC2:
  # EN TERMINAL
- #git clone https://github.com/cristoalexis/wordpressAWS.git
-#cd wordpressAWS
-#docker build -t wordpress-image .
-#docker run -d -p 80:80 --name my-wordpress-container wordpress-image
+ # git clone https://github.com/cristoalexis/wordpressAWS.git
+# cd wordpressAWS
+# docker build -t wordpress-image .
+# docker run -d -p 80:80 --name my-wordpress-container wordpress-image
 Este comando ejecuta el contenedor utilizando la imagen que acabamos de crear y mapea el puerto 80 de la instancia EC2 al puerto 80 del contenedor.
-#Verifica que el contenedor se haya iniciado correctamente ejecutando el siguiente comando:
+# Verifica que el contenedor se haya iniciado correctamente ejecutando el siguiente comando:
 docker ps
 Deberías ver el contenedor de WordPress en la lista.
-Ahora puedes acceder a WordPress en tu navegador web utilizando la dirección IP de tu instancia EC2. Asegúrate de tener el puerto 80 abierto en el grupo de seguridad de la instancia EC2.
+# Ahora puedes acceder a WordPress en tu navegador web utilizando la dirección IP de tu instancia EC2. Asegúrate de tener el puerto 80 abierto en el grupo de seguridad de la instancia EC2.
 
 
-http://<DIRECCION_IP_DE_LA_INSTANCIA>
+# http://<DIRECCION_IP_DE_LA_INSTANCIA>
 Reemplaza <DIRECCION_IP_DE_LA_INSTANCIA> con la dirección IP de tu instancia EC2.
 
 
 Siguiendo estos pasos, deberías poder desplegar WordPress en tu instancia EC2 de Amazon Linux utilizando solo un archivo Dockerfile. Asegúrate de haber configurado correctamente el archivo Dockerfile para incluir todas las dependencias y configuraciones necesarias para ejecutar WordPress en el contenedor.
 
-sudo service docker start
-sudo usermod -a -G docker ec2-user
+# sudo service docker start
+# sudo usermod -a -G docker ec2-user
 2. Cierra la sesión de SSH y vuelve a iniciar sesión para aplicar los cambios.
 3. Instala Docker Compose en la instancia EC2. Ejecuta los siguientes comandos:
