@@ -1,22 +1,31 @@
+FROM php:7.4-fpm
 
-FROM wordpress:latest
+# Instala las dependencias necesarias
+RUN apt-get update && apt-get install -y \
+    libjpeg-dev \
+    libpng-dev \
+    libzip-dev \
+    unzip \
+    curl
 
-# Copia el archivo de configuración de Apache con la opción de mod_rewrite habilitada
-COPY ./apache-config.conf /etc/apache2/conf-available/
-RUN a2enconf apache-config
-
-# Establece el directorio de trabajo
-WORKDIR /var/www/html
+# Instala las extensiones de PHP requeridas por WordPress
+RUN docker-php-ext-configure gd --with-jpeg && \
+    docker-php-ext-install -j$(nproc) gd mysqli zip
 
 # Descarga e instala WordPress
-RUN set -ex; \
-    curl -o wordpress.tar.gz -SL https://wordpress.org/latest.tar.gz; \
-    tar -xzf wordpress.tar.gz --strip-components=1; \
-    rm wordpress.tar.gz; \
-    chown -R www-data:www-data .
+RUN curl -o wordpress.tar.gz -SL https://wordpress.org/latest.tar.gz && \
+    tar -xzf wordpress.tar.gz -C /var/www/html --strip-components=1 && \
+    rm wordpress.tar.gz
 
-# Expone el puerto 80
+# Establece los permisos correctos para el directorio de WordPress
+RUN chown -R www-data:www-data /var/www/html
+
+# Expone el puerto 80 (puerto por defecto de HTTP)
 EXPOSE 80
 
-# Inicia el servidor Apache
-CMD ["apache2-foreground"]
+# Configura el directorio de trabajo
+WORKDIR /var/www/html
+
+# Configura el punto de entrada del contenedor
+CMD ["php", "-S", "0.0.0.0:80", "-t", "."]
+
