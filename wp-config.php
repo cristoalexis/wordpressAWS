@@ -9,11 +9,11 @@ define('DB_COLLATE', '');
 // Resto de la configuración de WordPress...
 
 // Define las claves únicas de autenticación y sal
-define('AUTH_KEY',         'tu-contraseña-única');
-define('SECURE_AUTH_KEY',  'tu-contraseña-única');
-define('LOGGED_IN_KEY',    'tu-contraseña-única');
-define('NONCE_KEY',        'tu-contraseña-única');
-define('AUTH_SALT',        'tu-contraseña-única');
-define('SECURE_AUTH_SALT', 'tu-contraseña-única');
-define('LOGGED_IN_SALT',   'tu-contraseña-única');
-define('NONCE_SALT',       'tu-contraseña-única');
+define('AUTH_KEY',         'Cristobal123');
+define('SECURE_AUTH_KEY',  'Cristobal123');
+define('LOGGED_IN_KEY',    'Cristobal123');
+define('NONCE_KEY',        'Cristobal123');
+define('AUTH_SALT',        'Cristobal123');
+define('SECURE_AUTH_SALT', 'Cristobal123');
+define('LOGGED_IN_SALT',   'Cristobal123');
+define('NONCE_SALT',       'Cristobal123');
